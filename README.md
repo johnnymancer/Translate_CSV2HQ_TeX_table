@@ -1,0 +1,2 @@
+# Translate_CSV2HQ_TeX_table
+CSVの実験データ等を高品質なTeXテーブルに変換するツール。
