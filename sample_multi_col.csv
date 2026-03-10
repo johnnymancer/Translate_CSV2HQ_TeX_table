@@ -1,0 +1,4 @@
+Method,Accuracy,Accuracy,F1-Score,F1-Score
+,Train,Test,Train,Test
+Baseline,0.85,0.80,0.82,0.78
+Ours,0.92,0.89,0.90,0.87

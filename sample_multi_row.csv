@@ -1,0 +1,5 @@
+Condition,Dataset,Result
+Setting A,Dataset 1,0.85
+Setting A,Dataset 2,0.82
+Setting B,Dataset 1,0.91
+Setting B,Dataset 2,0.89
