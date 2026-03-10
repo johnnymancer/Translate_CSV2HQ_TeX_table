@@ -35,19 +35,25 @@ def csv_to_tex(input_file, output_file=None, separator=',', na_rep='-', float_fo
     else:
         styler = styler.format(na_rep=na_rep)
 
-    # We want a classic table environment
+    # Determine the column format with vertical lines, e.g., |c|c|c|
+    num_cols = len(df.columns)
+    col_format = "|" + "|".join(["c"] * num_cols) + "|"
+
+    # We want a classic table environment without booktabs
     tex_str = styler.to_latex(
         environment="table",
         caption=caption,
         label=label,
-        hrules=True, # Uses booktabs \toprule, \midrule, \bottomrule
-        clines="skip-last;data",
-        position="htbp",
+        column_format=col_format,
+        hrules=True, # We will replace booktabs rules with \hline
+        position="H",
         position_float="centering"
     )
 
-    # Pandas Styler output might need minor tweaks, but `hrules=True` uses booktabs.
-    # It requires \usepackage{booktabs} in the main tex file.
+    # Replace booktabs rules with classic \hline
+    tex_str = tex_str.replace("\\toprule", "\\hline")
+    tex_str = tex_str.replace("\\midrule", "\\hline")
+    tex_str = tex_str.replace("\\bottomrule", "\\hline")
 
     if output_file:
         try:

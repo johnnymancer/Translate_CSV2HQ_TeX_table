@@ -1,12 +1,12 @@
 # Translate_CSV2HQ_TeX_table
 
-CSVの実験データ等を高品質なTeXテーブルに変換するコマンドラインツール。
-pandasを活用し、学術論文（特にTeX）でそのまま使用できる見栄えの良いテーブルのLaTeXコードを自動生成します。
-`booktabs` スタイル（`\toprule`, `\midrule`, `\bottomrule`）の罫線を使用します。
+CSVの実験データ等をTeXテーブルに変換するコマンドラインツール。
+pandasを活用し、LaTeXのデフォルト環境のみでコンパイル可能なテーブルのコードを自動生成します。
+追加パッケージ（`booktabs`など）を必要とせず、標準の罫線（`\hline`）と縦線を使用したクラシックな表を出力します。
 
 ## 主な機能
 
-- 高品質なTeX出力（`booktabs`対応）
+- デフォルトのTeX環境でコンパイル可能なクラシックな表出力（縦線、`\hline`対応）
 - 数値の自動フォーマット（小数点以下の桁数指定）
 - 柔軟なCSV読み込み（区切り文字の指定、欠損値のハイフン等への自動変換）
 - テーブルメタデータ（キャプション、ラベル）の自動生成
@@ -57,21 +57,21 @@ python csv2tex.py input.csv -o output.tex --digits 2 --caption "実験結果の�
 
 ## 出力されるTeXコードの例
 
-生成されたTeXコードを使用するためには、メインのTeXファイルにて `\usepackage{booktabs}` を宣言してください。
+追加パッケージをインストールせず、標準のTeX環境でコンパイル可能です。
 
 ```latex
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{実験結果の比較}
 \label{tab:results}
-\begin{tabular}{lrrr}
-\toprule
+\begin{tabular}{|c|c|c|c|}
+\hline
 Method & Accuracy & Precision & Recall \\
-\midrule
+\hline
 Baseline & 0.85 & 0.82 & 0.88 \\
 Ours & 0.92 & 0.90 & 0.94 \\
 Other & - & 0.70 & 0.75 \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 ```
