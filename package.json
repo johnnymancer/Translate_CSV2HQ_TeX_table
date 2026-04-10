@@ -1,0 +1,21 @@
+{
+  "name": "translate_csv2hq_tex_table",
+  "version": "1.0.0",
+  "description": "CSVの実験データ等を高品質なTeXテーブルに変換するツール。",
+  "main": "app.js",
+  "scripts": {
+    "start": "python3 -m http.server 5173",
+    "test": "echo \"No tests configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnymancer/Translate_CSV2HQ_TeX_table.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnnymancer/Translate_CSV2HQ_TeX_table/issues"
+  },
+  "homepage": "https://github.com/johnnymancer/Translate_CSV2HQ_TeX_table#readme"
+}
