@@ -67,6 +67,9 @@ function parseCsv(text) {
 }
 
 function buildTable(rows, caption, label, columnFormat, shouldEscape) {
+  if (!rows.length) {
+    throw new Error("No rows to process.");
+  }
   const normalize = (t) => (shouldEscape ? escapeLatex(t) : t);
   const colfmt = columnFormat || `|${Array(rows[0].length).fill("c").join("|")}|`;
   const lines = ["\\begin{table}[H]", "    \\centering"];
