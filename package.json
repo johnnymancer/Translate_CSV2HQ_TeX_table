@@ -4,7 +4,7 @@
   "description": "CSVの実験データ等を高品質なTeXテーブルに変換するツール。",
   "main": "app.js",
   "scripts": {
-    "start": "python3 -m http.server 5173",
+    "start": "node server.js",
     "test": "echo \"No tests configured\""
   },
   "repository": {

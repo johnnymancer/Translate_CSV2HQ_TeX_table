@@ -62,8 +62,13 @@ function parseCsv(text) {
     throw new Error("CSV is empty.");
   }
 
-  const maxCols = Math.max(...rows.map((r) => r.length));
-  return rows.map((r) => [...r, ...Array(maxCols - r.length).fill("")]);
+  const normalizedRows = rows.filter((r) => r.length > 0);
+  if (!normalizedRows.length) {
+    throw new Error("CSV is empty.");
+  }
+
+  const maxCols = Math.max(...normalizedRows.map((r) => r.length));
+  return normalizedRows.map((r) => [...r, ...Array(maxCols - r.length).fill("")]);
 }
 
 function buildTable(rows, caption, label, columnFormat, shouldEscape) {
