@@ -8,7 +8,7 @@ CSVの実験データ等を高品質なTeXテーブルに変換するツール�
 ### 使い方
 
 ```bash
-python /home/runner/work/Translate_CSV2HQ_TeX_table/Translate_CSV2HQ_TeX_table/translate_csv2tex.py INPUT.csv \
+python translate_csv2tex.py INPUT.csv \
   -o OUTPUT.tex \
   --caption "表タイトル" \
   --label "tab:example"
