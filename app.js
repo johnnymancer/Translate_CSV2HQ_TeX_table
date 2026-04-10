@@ -1,5 +1,4 @@
 const LATEX_ESCAPE_MAP = {
-  "\\": "\\textbackslash{}",
   "&": "\\&",
   "%": "\\%",
   "$": "\\$",
@@ -12,7 +11,10 @@ const LATEX_ESCAPE_MAP = {
 };
 
 function escapeLatex(text) {
-  return [...text].map((ch) => LATEX_ESCAPE_MAP[ch] ?? ch).join("");
+  const placeholder = "__LATEX_BACKSLASH__";
+  let escaped = [...text].map((ch) => (ch === "\\" ? placeholder : (LATEX_ESCAPE_MAP[ch] ?? ch))).join("");
+  escaped = escaped.replaceAll(placeholder, "\\textbackslash{}");
+  return escaped;
 }
 
 function parseCsv(text) {

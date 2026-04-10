@@ -2,7 +2,7 @@
   "name": "translate_csv2hq_tex_table",
   "version": "1.0.0",
   "description": "CSVの実験データ等を高品質なTeXテーブルに変換するツール。",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"No tests configured\""
