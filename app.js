@@ -9,12 +9,15 @@ const LATEX_ESCAPE_MAP = {
   "~": "\\textasciitilde{}",
   "^": "\\textasciicircum{}",
 };
+const DEFAULT_TEXTAREA_ROWS = 14;
 
 function escapeLatex(text) {
-  let placeholder = "\uE000";
-  while (text.includes(placeholder)) {
-    placeholder += "\uE000";
-  }
+  let counter = 0;
+  let placeholder = "";
+  do {
+    counter += 1;
+    placeholder = `__LATEX_BACKSLASH_${counter}__`;
+  } while (text.includes(placeholder));
   let escaped = [...text].map((ch) => (ch === "\\" ? placeholder : (LATEX_ESCAPE_MAP[ch] ?? ch))).join("");
   escaped = escaped.replaceAll(placeholder, "\\textbackslash{}");
   return escaped;
@@ -145,7 +148,7 @@ async function onGenerate() {
     summary.textContent = `${result.fileName}${result.isError ? "（エラー）" : ""}`;
 
     const textarea = document.createElement("textarea");
-    textarea.rows = 14;
+    textarea.rows = DEFAULT_TEXTAREA_ROWS;
     textarea.readOnly = true;
     textarea.value = result.content;
     if (result.isError) {

@@ -4,6 +4,7 @@ const path = require("path");
 
 const PORT = 5173;
 const ROOT = __dirname;
+const ALLOWED_FILES = new Set(["index.html", "app.js", "style.css"]);
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -13,8 +14,15 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  const requestPath = req.url === "/" ? "/index.html" : req.url.split("?")[0];
-  const safePath = requestPath.startsWith("/") ? requestPath.slice(1) : requestPath;
+  const requestPath = req.url === "/" ? "index.html" : req.url.split("?")[0].replace(/^\/+/, "");
+  const safePath = decodeURIComponent(requestPath);
+
+  if (!ALLOWED_FILES.has(safePath)) {
+    res.writeHead(404);
+    res.end("Not found");
+    return;
+  }
+
   const filePath = path.resolve(ROOT, safePath);
   const rootPrefix = `${ROOT}${path.sep}`;
 
