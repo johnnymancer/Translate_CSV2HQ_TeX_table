@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Translate CSV to TeX Table</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>CSV → TeX Table</h1>
+      <p>CSVをアップロードしてLaTeXテーブルを生成します。</p>
+
+      <section class="panel">
+        <label>CSVファイル
+          <input id="csvFile" type="file" accept=".csv,text/csv" multiple />
+        </label>
+        <label>Caption
+          <input id="caption" type="text" placeholder="表タイトル" />
+        </label>
+        <label>Label
+          <input id="label" type="text" placeholder="tab:example" />
+        </label>
+        <label>Column format (optional)
+          <input id="columnFormat" type="text" placeholder="|c|c|c|" />
+        </label>
+        <label class="checkbox">
+          <input id="escapeLatex" type="checkbox" checked />
+          LaTeXエスケープを有効化
+        </label>
+        <button id="generateBtn" type="button">TeXを生成</button>
+      </section>
+
+      <section class="panel">
+        <h2>出力（ファイルごと）</h2>
+        <div id="outputs" class="outputs"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
