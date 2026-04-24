@@ -56,3 +56,35 @@ button:hover {
 textarea {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+
+.outputs {
+  display: grid;
+  gap: 10px;
+}
+
+.output-item {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  background: #fafafa;
+}
+
+.output-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.output-item textarea {
+  width: 100%;
+  margin-top: 0;
+}
+
+.status-message {
+  margin: 0;
+  color: #374151;
+}
+
+.error-output {
+  color: #b91c1c;
+}

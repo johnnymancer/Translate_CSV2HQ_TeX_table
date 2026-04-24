@@ -11,7 +11,7 @@ Python CLIではなく、ブラウザ上で動く最小Webアプリ構成に移�
 npm start
 ```
 
-ブラウザで `http://localhost:5173` を開き、CSVを選択してTeXを生成します。
+ブラウザで `http://localhost:5173` を開き、CSVを1つまたは複数選択してTeXを生成します。
 
 ### 入力項目
 
@@ -19,3 +19,8 @@ npm start
 - Label
 - Column format（例: `|c|c|c|`）
 - LaTeXエスケープ有効/無効
+
+### 出力
+
+- ファイルごとに個別の出力フィールドを表示
+- 各出力フィールドは折りたたみ可能

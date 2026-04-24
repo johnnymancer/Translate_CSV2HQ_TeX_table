@@ -11,7 +11,10 @@ const LATEX_ESCAPE_MAP = {
 };
 
 function escapeLatex(text) {
-  const placeholder = "__LATEX_BACKSLASH__";
+  let placeholder = "\uE000";
+  while (text.includes(placeholder)) {
+    placeholder += "\uE000";
+  }
   let escaped = [...text].map((ch) => (ch === "\\" ? placeholder : (LATEX_ESCAPE_MAP[ch] ?? ch))).join("");
   escaped = escaped.replaceAll(placeholder, "\\textbackslash{}");
   return escaped;
@@ -102,21 +105,56 @@ async function onGenerate() {
   const label = document.getElementById("label").value.trim();
   const columnFormat = document.getElementById("columnFormat").value.trim();
   const shouldEscape = document.getElementById("escapeLatex").checked;
-  const output = document.getElementById("output");
+  const outputs = document.getElementById("outputs");
 
-  const file = fileInput.files?.[0];
-  if (!file) {
-    output.value = "CSVファイルを選択してください。";
+  const files = Array.from(fileInput.files ?? []);
+  if (!files.length) {
+    outputs.innerHTML = '<p class="status-message">CSVファイルを選択してください。</p>';
     return;
   }
 
-  try {
+  outputs.innerHTML = "";
+
+  const settledResults = await Promise.allSettled(files.map(async (file) => {
     const csvText = await file.text();
     const rows = parseCsv(csvText);
-    output.value = buildTable(rows, caption, label, columnFormat, shouldEscape);
-  } catch (err) {
-    output.value = `エラー: ${err instanceof Error ? err.message : String(err)}`;
-  }
+    return {
+      fileName: file.name,
+      content: buildTable(rows, caption, label, columnFormat, shouldEscape),
+      isError: false,
+    };
+  }));
+
+  const results = settledResults.map((result, index) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    }
+    return {
+      fileName: files[index].name,
+      content: `エラー: ${result.reason instanceof Error ? result.reason.message : String(result.reason)}`,
+      isError: true,
+    };
+  });
+
+  results.forEach((result, index) => {
+    const wrapper = document.createElement("details");
+    wrapper.className = "output-item";
+    wrapper.open = index === 0;
+
+    const summary = document.createElement("summary");
+    summary.textContent = `${result.fileName}${result.isError ? "（エラー）" : ""}`;
+
+    const textarea = document.createElement("textarea");
+    textarea.rows = 14;
+    textarea.readOnly = true;
+    textarea.value = result.content;
+    if (result.isError) {
+      textarea.classList.add("error-output");
+    }
+
+    wrapper.append(summary, textarea);
+    outputs.append(wrapper);
+  });
 }
 
 document.getElementById("generateBtn").addEventListener("click", onGenerate);

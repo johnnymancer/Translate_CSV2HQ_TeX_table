@@ -13,7 +13,7 @@
 
       <section class="panel">
         <label>CSVファイル
-          <input id="csvFile" type="file" accept=".csv,text/csv" />
+          <input id="csvFile" type="file" accept=".csv,text/csv" multiple />
         </label>
         <label>Caption
           <input id="caption" type="text" placeholder="表タイトル" />
@@ -32,8 +32,8 @@
       </section>
 
       <section class="panel">
-        <h2>出力</h2>
-        <textarea id="output" rows="14" readonly></textarea>
+        <h2>出力（ファイルごと）</h2>
+        <div id="outputs" class="outputs"></div>
       </section>
     </main>
 

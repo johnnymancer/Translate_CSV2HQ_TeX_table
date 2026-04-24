@@ -13,10 +13,12 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  const requestPath = req.url === "/" ? "/index.html" : req.url;
-  const filePath = path.join(ROOT, path.normalize(requestPath));
+  const requestPath = req.url === "/" ? "/index.html" : req.url.split("?")[0];
+  const safePath = requestPath.startsWith("/") ? requestPath.slice(1) : requestPath;
+  const filePath = path.resolve(ROOT, safePath);
+  const rootPrefix = `${ROOT}${path.sep}`;
 
-  if (!filePath.startsWith(ROOT)) {
+  if (filePath !== ROOT && !filePath.startsWith(rootPrefix)) {
     res.writeHead(403);
     res.end("Forbidden");
     return;
