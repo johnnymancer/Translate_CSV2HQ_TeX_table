@@ -117,20 +117,22 @@ function renderFileOptions(files) {
     title.textContent = file.name;
 
     const captionLabel = document.createElement("label");
-    captionLabel.textContent = "Caption";
+    const captionText = document.createElement("span");
+    captionText.textContent = "Caption";
     const captionInput = document.createElement("input");
     captionInput.type = "text";
     captionInput.id = `caption-${index}`;
     captionInput.placeholder = "表タイトル";
-    captionLabel.append(captionInput);
+    captionLabel.append(captionText, captionInput);
 
     const labelLabel = document.createElement("label");
-    labelLabel.textContent = "Label";
+    const labelText = document.createElement("span");
+    labelText.textContent = "Label";
     const labelInput = document.createElement("input");
     labelInput.type = "text";
     labelInput.id = `label-${index}`;
     labelInput.placeholder = "tab:example";
-    labelLabel.append(labelInput);
+    labelLabel.append(labelText, labelInput);
 
     wrapper.append(title, captionLabel, labelLabel);
     fileOptions.append(wrapper);
