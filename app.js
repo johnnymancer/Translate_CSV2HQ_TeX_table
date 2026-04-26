@@ -151,11 +151,11 @@ async function onGenerate() {
 
   outputs.innerHTML = "";
 
-  const settledResults = await Promise.allSettled(files.map(async (file) => {
+  const settledResults = await Promise.allSettled(files.map(async (file, index) => {
     const csvText = await file.text();
     const rows = parseCsv(csvText);
-    const caption = document.getElementById(`caption-${files.indexOf(file)}`)?.value.trim() ?? "";
-    const label = document.getElementById(`label-${files.indexOf(file)}`)?.value.trim() ?? "";
+    const caption = document.getElementById(`caption-${index}`)?.value.trim() ?? "";
+    const label = document.getElementById(`label-${index}`)?.value.trim() ?? "";
     return {
       fileName: file.name,
       content: buildTable(rows, caption, label, columnFormat, shouldEscape),
