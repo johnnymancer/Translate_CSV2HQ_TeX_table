@@ -15,8 +15,8 @@ npm start
 
 ### 入力項目
 
-- Caption
-- Label
+- Caption（ファイルごと）
+- Label（ファイルごと）
 - Column format（例: `|c|c|c|`）
 - LaTeXエスケープ有効/無効
 

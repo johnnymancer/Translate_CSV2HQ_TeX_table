@@ -102,10 +102,43 @@ function buildTable(rows, caption, label, columnFormat, shouldEscape) {
   return `${lines.join("\n")}\n`;
 }
 
+function renderFileOptions(files) {
+  const fileOptions = document.getElementById("fileOptions");
+  fileOptions.innerHTML = "";
+
+  if (!files.length) return;
+
+  files.forEach((file, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "file-option-item";
+
+    const title = document.createElement("p");
+    title.className = "file-option-title";
+    title.textContent = file.name;
+
+    const captionLabel = document.createElement("label");
+    captionLabel.textContent = "Caption";
+    const captionInput = document.createElement("input");
+    captionInput.type = "text";
+    captionInput.id = `caption-${index}`;
+    captionInput.placeholder = "表タイトル";
+    captionLabel.append(captionInput);
+
+    const labelLabel = document.createElement("label");
+    labelLabel.textContent = "Label";
+    const labelInput = document.createElement("input");
+    labelInput.type = "text";
+    labelInput.id = `label-${index}`;
+    labelInput.placeholder = "tab:example";
+    labelLabel.append(labelInput);
+
+    wrapper.append(title, captionLabel, labelLabel);
+    fileOptions.append(wrapper);
+  });
+}
+
 async function onGenerate() {
   const fileInput = document.getElementById("csvFile");
-  const caption = document.getElementById("caption").value.trim();
-  const label = document.getElementById("label").value.trim();
   const columnFormat = document.getElementById("columnFormat").value.trim();
   const shouldEscape = document.getElementById("escapeLatex").checked;
   const outputs = document.getElementById("outputs");
@@ -121,6 +154,8 @@ async function onGenerate() {
   const settledResults = await Promise.allSettled(files.map(async (file) => {
     const csvText = await file.text();
     const rows = parseCsv(csvText);
+    const caption = document.getElementById(`caption-${files.indexOf(file)}`)?.value.trim() ?? "";
+    const label = document.getElementById(`label-${files.indexOf(file)}`)?.value.trim() ?? "";
     return {
       fileName: file.name,
       content: buildTable(rows, caption, label, columnFormat, shouldEscape),
@@ -160,4 +195,8 @@ async function onGenerate() {
   });
 }
 
+document.getElementById("csvFile").addEventListener("change", (event) => {
+  const files = Array.from(event.target.files ?? []);
+  renderFileOptions(files);
+});
 document.getElementById("generateBtn").addEventListener("click", onGenerate);

@@ -40,6 +40,25 @@ textarea {
   align-items: center;
 }
 
+.file-options {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.file-option-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px;
+  background: #f9fafb;
+}
+
+.file-option-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 button {
   border: none;
   background: #2563eb;
